@@ -29,6 +29,38 @@ When analyzing binaries without debug symbols or PDBs—such as Windows drivers,
 - Python packages: `r2pipe`, `tree-sitter`, `tree-sitter-c` (or `tree-sitter-language-pack`)
 - Optional GUI dependency: `PySide6` (or `PyQt6` / `PyQt5`)
 
+### User installation (Linux / macOS)
+
+From the repository checkout, run:
+
+```sh
+make user-install
+```
+
+This creates a dedicated virtual environment in `~/.local/lib/r2-symbol-importer`,
+installs the CLI and its runtime dependencies, and links `r2-symbol-importer` into
+`~/.local/bin`. Python 3.9+ with `venv` support and Make are required. Add
+`~/.local/bin` to your `PATH` before starting radare2. Re-run the target after
+updating the checkout to upgrade the installation.
+
+```sh
+make user-uninstall
+```
+
+Uninstall removes the launcher and its dedicated environment. It leaves other
+Python environments and the source checkout untouched.
+
+Override `PYTHON`, `PREFIX`, or `BINDIR` when needed, using the same paths for
+installation and removal. For example, r2pm can delegate both operations:
+
+```sh
+make user-install PREFIX="$R2PM_PREFIX" BINDIR="$R2PM_BINDIR"
+make user-uninstall PREFIX="$R2PM_PREFIX" BINDIR="$R2PM_BINDIR"
+```
+
+These targets install the radare2 CLI. Optional iaito/Qt integration requires the
+GUI dependencies in the Python environment used by iaito; see below.
+
 ### Install via pip
 
 ```bash
